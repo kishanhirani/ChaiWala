@@ -18,6 +18,7 @@ const TextInput = (props) => {
                 }]}
                 placeholderTextColor={Colors.light_black}
                 secureTextEntry={secureTextEntry}
+                cursorColor={Colors.dark_liver}
                 keyboardType={props.keyboardType}
                 onChangeText={(text) => {
                     const regex =

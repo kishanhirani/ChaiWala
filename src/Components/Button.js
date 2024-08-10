@@ -29,9 +29,7 @@ const Button = (props) => {
 
     return (
         <TouchableOpacity onPress={props.onPress} style={styles.buttonView}>
-            {props.isLoading ?
-                <ActivityIndicator size={ScaleSize.spacing_30} color={Colors.primary} /> : <Text style={styles.title}>{props.title}</Text>
-            }
+            <Text style={styles.title}>{props.title}</Text>
         </TouchableOpacity>
     )
 }

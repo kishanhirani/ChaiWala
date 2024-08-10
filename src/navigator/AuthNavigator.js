@@ -5,6 +5,7 @@ import React from 'react'
 import Home from '../screens/home/Home';
 import Login from '../screens/auth/Login';
 import SignUp from '../screens/auth/SignUp';
+import SplashScreen from '../screens/auth/SplashScreen';
 
 export const AuthNavigator = () => {
 
@@ -13,6 +14,7 @@ export const AuthNavigator = () => {
         <View style={{ flex: 1 }}>
 
             <Stack.Navigator screenOptions={{ headerShown: false }}>
+                <Stack.Screen name={"SplashScreen"} component={SplashScreen} />
                 <Stack.Screen name={"Login"} component={Login} />
                 <Stack.Screen name={"SignUp"} component={SignUp} />
             </Stack.Navigator>

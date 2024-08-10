@@ -51,7 +51,7 @@ const SignUp = ({ navigation }) => {
             />
 
             <View style={{ marginTop: ScaleSize.spacing_30 }} >
-                <Button isLoading={isLoading} title={'Register'} onPress={() => handleSignup()} />
+                <Button title={'Register'} onPress={() => handleSignup()} />
             </View>
 
             <Text style={styles.accountText}>Already have an account? <Text onPress={() => navigation.navigate('SignUp')} style={styles.registerText}>Sign in</Text></Text>
