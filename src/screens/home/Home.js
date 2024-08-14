@@ -174,7 +174,8 @@ const Home = () => {
         <Icon onPress={() => handleLogout()} name='logout' size={30} color={Colors.wheat} />
         <Text style={{ color: Colors.wheat, fontSize: TextFontSize.size_22, fontFamily: AppFonts.bold }}>Home</Text>
         {formattedDate != new Date().toLocaleDateString()
-          && <Icon1 onPress={() => setModalVisible(true)} name='add-circle-outline' size={30} color={Colors.wheat} />
+          ? <Icon1 onPress={() => setModalVisible(true)} name='add-circle-outline' size={30} color={Colors.wheat} />
+          : <Icon1 onPress={() => setModalVisible(true)} name='add-circle-outline' size={30} color={Colors.dark_liver} />
         }
       </View>
 
