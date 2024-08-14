@@ -12,22 +12,46 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Signin, SignUp } from '../../redux/Actions/authActions';
 import CheckBox from '@react-native-community/checkbox';
 import Loader from '../../Components/Loader';
+import Utils from '../../helper/utils'
 const Login = ({ navigation }) => {
   const { isLoading } = useSelector((state) => state.auth)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [emailError, setEmailError] = useState('')
+  const [passwordError, setPasswordError] = useState('')
   const [remember, setRemember] = useState(false)
   const dispatch = useDispatch()
-  const handleLogin = () => {
-    let body = {
-      email: email,
-      password: password
-    }
-    dispatch(Signin(body, remember))
 
+  const handleLogin = () => {
+
+    let isValid = true
+
+    if (Utils.isValueStringNull(email)) {
+      setEmailError("Email is required.")
+      isValid = false
+    } else if (!Utils.isValidEmail(email)) {
+      setEmailError('Invaid Email Address')
+      isValid = false
+    }
+    if (Utils.isValueStringNull(password)) {
+      setPasswordError("Password is required.")
+      isValid = false
+    } else if (password.length < 6) {
+      setPasswordError('The password must contain at least 6 characters.')
+      isValid = false
+    }
+
+    if (isValid) {
+      let body = {
+        email: email,
+        password: password
+      }
+      dispatch(Signin(body, remember))
+    }
   }
   return (
-    <ScrollView keyboardShouldPersistTaps={'always'} style={styles.container}>
+    <ScrollView keyboardShouldPersistTaps={'handled'} style={styles.container}>
+
       <Loader visible={isLoading} />
       <SBar />
       <Image source={images.tea} style={styles.image} />
@@ -35,18 +59,29 @@ const Login = ({ navigation }) => {
 
       <TextInput
         placeholder={"Email"}
-        onChangeText={(text) => setEmail(text)}
+        value={email}
+        onChangeText={(text) => {
+          setEmail(text)
+          setEmailError("")
+        }}
         autoCapitalize='none'
-        keyboardType={'email-address'}
+        error={emailError}
       />
+
       <TextInput
-        onChangeText={(text) => setPassword(text)}
+        onChangeText={(text) => {
+          setPassword(text)
+          setPasswordError("")
+        }}
+        value={password}
         placeholder={"Password"}
         autoCapitalize='none'
         secureTextEntry
+        error={passwordError}
       />
-      <View style={styles.rememberView}>
 
+
+      <View style={styles.rememberView}>
         <CheckBox
           disabled={false}
           value={remember}
@@ -55,6 +90,8 @@ const Login = ({ navigation }) => {
         />
         <Text style={styles.rememberText}>Remember me</Text>
       </View>
+
+
       <View style={{ marginTop: ScaleSize.spacing_60 }} >
         <Button title={'Login'} onPress={() => handleLogin()} />
       </View>
@@ -82,7 +119,7 @@ const styles = StyleSheet.create({
   loginHeader: {
     alignSelf: "center",
     color: Colors.black,
-    fontFamily: AppFonts.bold,
+    fontFamily: AppFonts.semi_bold,
     fontSize: TextFontSize.size_34,
     top: -ScaleSize.spacing_20,
     marginBottom: ScaleSize.spacing_30
@@ -90,7 +127,7 @@ const styles = StyleSheet.create({
   accountText: {
     fontSize: TextFontSize.size_14,
     color: Colors.black,
-    fontFamily: AppFonts.semi_bold,
+    fontFamily: AppFonts.medium,
     alignSelf: "center",
     marginTop: ScaleSize.spacing_5
   },
@@ -98,8 +135,7 @@ const styles = StyleSheet.create({
     fontSize: TextFontSize.size_18,
     lineHeight: TextFontSize.size_18 + 15,
     color: Colors.black,
-    fontFamily: AppFonts.semi_bold,
-    marginTop: 2,
+    fontFamily: AppFonts.medium,
   },
   rememberView: {
     flexDirection: 'row',
@@ -107,7 +143,7 @@ const styles = StyleSheet.create({
   },
   registerText: {
     fontSize: TextFontSize.size_14,
-    fontFamily: AppFonts.bold,
+    fontFamily: AppFonts.semi_bold,
     color: Colors.black,
     textDecorationLine: 'underline'
   }

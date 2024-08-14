@@ -1,7 +1,7 @@
 export const AppFonts = {
-  regular: 'Poppins-Regular',
-  medium: 'Poppins-Regular',
-  semi_bold: 'Poppins-Medium',
-  bold: 'Poppins-SemiBold',
+  regular: 'Roboto-Regular',
+  medium: 'Roboto-Medium',
+  semi_bold: 'Roboto-Bold',
+  bold: 'Roboto-Black',
 };
 

@@ -23,7 +23,7 @@ const fetchClient = () => {
         config.url = BASE_URl + config.url;
         var token = await AsyncStorage.getItem("@token");
         console.log(token);
-        if (!Utils.isStringNull(token)) {
+        if (!Utils.isNull(token)) {
             config.headers["token"] = token;
         }
         return config;

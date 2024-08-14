@@ -31,6 +31,5 @@ const styles = StyleSheet.create({
         color: Colors.wheat,
         fontSize: TextFontSize.size_16,
         fontFamily: AppFonts.medium,
-        paddingTop: 5
     }
 })

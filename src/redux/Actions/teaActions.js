@@ -10,13 +10,11 @@ export function fetchTeas(body, remember) {
             .then(async (response) => {
                 const responseData = response.data;
                 if (responseData.success) {
-                    setTimeout(() => {
 
-                        dispatch({
-                            type: Constant.FETCH_TEAS_SUCCESS,
-                            payload: responseData,
-                        });
-                    }, 1000);
+                    dispatch({
+                        type: Constant.FETCH_TEAS_SUCCESS,
+                        payload: responseData,
+                    });
                 } else {
                     DialogueHelper(responseData)
                     dispatch({
@@ -29,6 +27,65 @@ export function fetchTeas(body, remember) {
                 console.log('error', error)
                 DialogueHelper(error)
                 dispatch({ type: Constant.FETCH_TEAS_FAILURE, payload: error });
+            });
+    };
+}
+
+export function addTea(body, callback) {
+    return (dispatch) => {
+        dispatch({ type: Constant.ADD_TEA_REQUEST, body: body });
+        return Api.post("tea/addTea", body)
+            .then(async (response) => {
+                const responseData = response.data;
+                if (responseData.success) {
+                    callback(true)
+                    dispatch({
+                        type: Constant.ADD_TEA_SUCCESS,
+                        payload: responseData,
+                    });
+                } else {
+                    callback(false)
+                    DialogueHelper(responseData)
+                    dispatch({
+                        type: Constant.ADD_TEA_FAILURE,
+                        payload: responseData,
+                    });
+                }
+            })
+            .catch((error) => {
+                console.log('error', error)
+                callback(false)
+                DialogueHelper(error)
+                dispatch({ type: Constant.ADD_TEA_FAILURE, payload: error });
+            });
+    };
+}
+export function updateTea(body, callback) {
+    return (dispatch) => {
+        dispatch({ type: Constant.UPDATE_TEA_REQUEST, body: body });
+        return Api.post("tea/updateTea", body)
+            .then(async (response) => {
+                const responseData = response.data;
+                if (responseData.success) {
+                    callback(true)
+                    dispatch({
+                        type: Constant.UPDATE_TEA_SUCCESS,
+                        payload: responseData,
+                    });
+                } else {
+                    callback(false)
+                    DialogueHelper(responseData)
+                    dispatch({
+                        type: Constant.UPDATE_TEA_FAILURE,
+                        payload: responseData,
+                    });
+                }
+            })
+            .catch((error) => {
+                console.log('error', error)
+                callback(false)
+                DialogueHelper(error)
+                dispatch({ type: Constant.UPDATE_TEA_FAILURE, payload: error });
             });
     };
 }

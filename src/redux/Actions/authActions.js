@@ -12,13 +12,11 @@ export function Signin(body, remember) {
             .then(async (response) => {
                 const responseData = response.data;
                 if (responseData.success) {
-                    setTimeout(() => {
-                        dispatch({
-                            type: Constant.SIGNIN_SUCCESS,
-                            payload: responseData,
-                        });
-                        reset('appNavigator', {})
-                    }, 1000);
+                    dispatch({
+                        type: Constant.SIGNIN_SUCCESS,
+                        payload: responseData,
+                    });
+                    reset('appNavigator', {})
                     if (remember) {
                         await AsyncStorage.setItem("@id", responseData.token)
                     }
@@ -38,21 +36,22 @@ export function Signin(body, remember) {
             });
     };
 }
-export function RegisterUser(body) {
+export function RegisterUser(body, remember) {
     return (dispatch) => {
         dispatch({ type: Constant.NEW_SIGNUP_REQUEST, body: body });
         return Api.post("user/createUser", body)
-            .then((response) => {
+            .then(async (response) => {
                 const responseData = response.data;
-                console.log('responseData', responseData)
                 if (responseData.success) {
-                    setTimeout(() => {
-
-                        dispatch({
-                            type: Constant.NEW_SIGNUP_SUCCESS,
-                            payload: responseData,
-                        });
-                    }, 1000);
+                    dispatch({
+                        type: Constant.NEW_SIGNUP_SUCCESS,
+                        payload: responseData,
+                    });
+                    reset('appNavigator', {})
+                    if (remember) {
+                        await AsyncStorage.setItem("@id", responseData.token)
+                    }
+                    await AsyncStorage.setItem("@token", responseData.token)
                 } else {
                     DialogueHelper(responseData)
                     dispatch({
